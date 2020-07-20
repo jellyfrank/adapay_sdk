@@ -1,4 +1,5 @@
 README.rst
+setup.cfg
 setup.py
 adapay/__init__.py
 adapay/message_manager.py
