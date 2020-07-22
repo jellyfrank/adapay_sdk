@@ -21,7 +21,7 @@ public_key = None
 """
 global_config_dict = None
 
-from fishbase.fish_logger import set_log_file, set_log_stdout
+# from fishbase.fish_logger import set_log_file, set_log_stdout
 
 base_url = 'https://api.adapay.tech'
 connect_timeout = 30
@@ -35,14 +35,15 @@ def init_log(console_enable=False, log_level='', log_tag='{adapay}', log_file_pa
     :param log_file_path:
     :return:
     """
-    if console_enable:
-        set_log_stdout()
-    if log_file_path:
-        set_log_file(log_file_path)
-    if log_level:
-        log_util.log_level = log_level
-        if log_tag:
-            log_util.log_tag = log_tag
+    # if console_enable:
+    #     # set_log_stdout()
+    # if log_file_path:
+    #     set_log_file(log_file_path)
+    # if log_level:
+    #     log_util.log_level = log_level
+    #     if log_tag:
+    #         log_util.log_tag = log_tag
+    pass
 
 
 def init_config(member_id, is_prod=True, config_dict=None):
