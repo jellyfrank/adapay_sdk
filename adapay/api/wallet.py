@@ -23,4 +23,13 @@ class Wallet(object):
         """
         return request_post(request_tools.wallet_pay, kwargs, base_url=Wallet.wallet_base_url)
 
+    @classmethod
+    def checkout(cls, **kwargs):
+        """
+        创建收银台对象
+        :param kwargs:
+        :return:
+        """
+        return request_post(request_tools.wallet_checkout, kwargs, base_url=Wallet.wallet_base_url)
+
 

@@ -32,24 +32,26 @@ settle_account_delete = '/v1/settle_accounts/delete'
 settle_account_detail_query = '/v1/settle_accounts/settle_details'
 settle_account_balance_query = '/v1/settle_accounts/balance'
 settle_account_cash_draw = '/v1/cashs'
+cash_draw_status = '/v1/cashs/stat'
 
 query_identity = '/v1/union/user_identity'
 
 wallet_login = '/v1/walletLogin'
 wallet_pay = '/v1/account/payment'
+wallet_checkout = '/v1/checkout'
 
 
 def __request_init(url, request_params, base_url):
-    ApiRequest.base_url = base_url
+    ApiRequest.base_url = base_url if base_url else adapay.base_url
     ApiRequest.build(adapay.api_key, adapay.private_key, adapay.public_key, url, request_params, adapay.__version__,
                      adapay.connect_timeout)
 
 
-def request_post(url, request_params, files=None, base_url=adapay.base_url):
+def request_post(url, request_params, files=None, base_url=''):
     __request_init(url, request_params, base_url)
     return ApiRequest.post(files)
 
 
-def request_get(url, request_params, base_url=adapay.base_url):
+def request_get(url, request_params, base_url=''):
     __request_init(url, request_params, base_url)
     return ApiRequest.get()

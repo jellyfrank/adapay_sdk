@@ -1,5 +1,3 @@
-from adapay.api import *
-from fishbase.fish_logger import set_log_file, set_log_stdout
 import json
 import os
 
@@ -23,6 +21,7 @@ public_key = None
 """
 global_config_dict = None
 
+from fishbase.fish_logger import set_log_file, set_log_stdout
 
 base_url = 'https://api.adapay.tech'
 connect_timeout = 30
@@ -46,7 +45,14 @@ def init_log(console_enable=False, log_level='', log_tag='{adapay}', log_file_pa
             log_util.log_tag = log_tag
 
 
-def init_config(member_id, config_dict, is_prod=True):
+def init_config(member_id, is_prod=True, config_dict=None):
+    if not config_path and not config_dict:
+        log_error('config_path is empty')
+        return
+
+    if not member_id:
+        log_error('member_id is empty')
+        return
 
     total_config_dict = adapay.global_config_dict
     if not total_config_dict:
@@ -55,8 +61,11 @@ def init_config(member_id, config_dict, is_prod=True):
     single_config_dict = total_config_dict.get(member_id)
 
     if not single_config_dict:
-        # config_json = read_file(config_path + os.sep + member_id + '.json')
-        single_config_dict = config_dict
+        if config_path:
+            config_json = read_file(config_path + os.sep + member_id + '.json')
+            single_config_dict = json.loads(config_json)
+        if config_dict:
+            single_config_dict = config_dict
         total_config_dict.update({member_id: single_config_dict})
 
     if is_prod:
@@ -65,8 +74,9 @@ def init_config(member_id, config_dict, is_prod=True):
         adapay.api_key = single_config_dict.get("api_key_test")
 
     adapay.private_key = single_config_dict.get("rsa_private_key")
-    adapay.public_key = read_file(os.path.dirname(
-        __file__) + os.sep + 'public_key.pem')
+    adapay.public_key = read_file(os.path.dirname(__file__) + os.sep + 'public_key.pem')
 
 
-__version__ = '9.1.0'
+__version__ = '1.1.4'
+
+from adapay.api import *

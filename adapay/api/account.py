@@ -54,4 +54,11 @@ class Account(object):
         """
         return request_post(request_tools.settle_account_cash_draw, kwargs)
 
+    @classmethod
+    def query_draw_cash_status(cls, **kwargs):
+        """
+        取现状态查询
+        """
+        return request_get(request_tools.cash_draw_status, kwargs)
+
 
